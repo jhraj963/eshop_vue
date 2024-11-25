@@ -46,8 +46,13 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
                             <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item">Login</a>
-                                <a href="#" class="dropdown-item">Register</a>
+                                <a v-if="!uid" href="/login" class="dropdown-item">Login</a>
+                                <a v-if="!uid" href="/register" class="dropdown-item">Register</a>
+                                <button v-if="uid" class="dropdown-item" @click="logout">Logout</button>
+                                <router-link v-if="uid" :to="'/home/'" class="dropdown-item">{{ userName.full_name }}</router-link>
+                                <!-- <a v-if="!uid" href="/login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"> 
+                                    <i class="fa fa-arrow-right ms-3"></i> Join Now
+                                </a> -->
                             </div>
                         </div>
                     </div>
@@ -94,9 +99,25 @@
 
 <script>
 export default {
-    name: 'Header',
-    props: {
-        msg: String
+  name: 'Header',
+  data() {
+    return {
+      
+      uid: sessionStorage.getItem('uid'), 
+      userName: JSON.parse(sessionStorage.getItem('userName'))
+    };
+  },
+  props: {
+    msg: String
+  },
+  methods: {
+    logout() {
+      this.uid = "";  // Clear uid
+      this.userName = "";  // Clear userName
+      sessionStorage.removeItem('uid'); // Clear the session storage
+      sessionStorage.removeItem('userName'); // Clear the session storage
+      window.location.reload(); // Reload the page to reflect logout
     }
+  }
 }
 </script>

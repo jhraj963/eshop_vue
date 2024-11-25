@@ -12,6 +12,12 @@ const routes =  [
     alias: "/AllProducts",
     name: "AllProducts",
     component: () => import("./components/AllProducts")
+  },
+  {
+    path: "/login",
+    alias: "/login",
+    name: "login",
+    component: () => import("./components/Login")
   }
 ];
 
