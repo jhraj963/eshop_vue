@@ -7,9 +7,9 @@
                     <div class="footer-widget">
                         <h2>Get in Touch</h2>
                         <div class="contact-info">
-                            <p><i class="fa fa-map-marker"></i>123 E Store, Los Angeles, USA</p>
-                            <p><i class="fa fa-envelope"></i>email@example.com</p>
-                            <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                            <p><i class="fa fa-map-marker"></i>Bordighir Phar, Chttaogram</p>
+                            <p><i class="fa fa-envelope"></i>e-shopper@gmail.com</p>
+                            <p><i class="fa fa-phone"></i>+88 01572 378254</p>
                         </div>
                     </div>
                 </div>
@@ -77,12 +77,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 copyright">
-                    <p>Copyright &copy; <a href="#">Your Site Name</a>. All Rights Reserved</p>
+                    <p>Copyright &copy; <a href="#">E-SHOPPER</a>. All Rights Reserved</p>
                 </div>
 
                 <div class="col-md-6 template-by">
-                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                    <p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                    <p>Designed By <a href="https://htmlcodex.com">JHR</a></p>
                 </div>
             </div>
         </div>

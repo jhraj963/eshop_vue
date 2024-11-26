@@ -43,7 +43,7 @@
                                 <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
                             </div>
                         </div>
-                        <div class="header-slider-item">
+                        <!-- <div class="header-slider-item">
                             <img src="assets/img/slider-2.jpg" alt="Slider Image" />
                             <div class="header-slider-caption">
                                 <p>Some text goes here that describes the image</p>
@@ -56,7 +56,7 @@
                                 <p>Some text goes here that describes the image</p>
                                 <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -81,7 +81,7 @@
     <!-- Main Slider End -->
 
     <!-- Brand Start -->
-    <div class="brand">
+    <!-- <div class="brand">
         <div class="container-fluid">
             <div class="brand-slider">
                 <div class="brand-item"><img src="assets/img/brand-1.png" alt=""></div>
@@ -92,9 +92,36 @@
                 <div class="brand-item"><img src="assets/img/brand-6.png" alt=""></div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Brand End -->
 
+    <!-- Feature Start-->
+    <div class="feature">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-2 col-md-6 feature-col">
+                    <div class="brand-item"><img src="assets/img/brand-1.png" alt=""></div>
+                </div>
+                <div class="col-lg-2 col-md-6 feature-col">
+                    <div class="brand-item"><img src="assets/img/brand-2.png" alt=""></div>
+                </div>
+                <div class="col-lg-2 col-md-6 feature-col">
+                    <div class="brand-item"><img src="assets/img/brand-3.png" alt=""></div>
+                </div>
+                <div class="col-lg-2 col-md-6 feature-col">
+                    <div class="brand-item"><img src="assets/img/brand-4.png" alt=""></div>
+                </div>
+                <div class="col-lg-2 col-md-6 feature-col">
+                    <div class="brand-item"><img src="assets/img/brand-5.png" alt=""></div>
+                </div>
+                <div class="col-lg-2 col-md-6 feature-col">
+                    <div class="brand-item"><img src="assets/img/brand-1.png" alt=""></div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <!-- Feature End-->
     <!-- Feature Start-->
     <div class="feature">
         <div class="container-fluid">
@@ -327,34 +354,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="product-item">
-                        <div class="product-title">
-                            <a href="#">Product Name</a>
-                            <div class="ratting">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                        </div>
-                        <div class="product-image">
-                            <a href="product-detail.html">
-                                <img src="assets/img/product-5.jpg" alt="Product Image">
-                            </a>
-                            <div class="product-action">
-                                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                <a href="#"><i class="fa fa-heart"></i></a>
-                                <a href="#"><i class="fa fa-search"></i></a>
-                            </div>
-                        </div>
-                        <div class="product-price">
-                            <h3><span>$</span>99</h3>
-                            <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -497,34 +496,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="product-item">
-                        <div class="product-title">
-                            <a href="#">Product Name</a>
-                            <div class="ratting">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                        </div>
-                        <div class="product-image">
-                            <a href="product-detail.html">
-                                <img src="assets/img/product-10.jpg" alt="Product Image">
-                            </a>
-                            <div class="product-action">
-                                <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                <a href="#"><i class="fa fa-heart"></i></a>
-                                <a href="#"><i class="fa fa-search"></i></a>
-                            </div>
-                        </div>
-                        <div class="product-price">
-                            <h3><span>$</span>99</h3>
-                            <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -534,7 +505,7 @@
     <div class="review">
         <div class="container-fluid">
             <div class="row align-items-center review-slider normal-slider">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="review-slider-item">
                         <div class="review-img">
                             <img src="assets/img/review-1.jpg" alt="Image">
@@ -556,7 +527,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="review-slider-item">
                         <div class="review-img">
                             <img src="assets/img/review-2.jpg" alt="Image">
@@ -578,7 +549,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="review-slider-item">
                         <div class="review-img">
                             <img src="assets/img/review-3.jpg" alt="Image">
