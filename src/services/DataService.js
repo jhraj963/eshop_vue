@@ -4,6 +4,9 @@ class DataService {
   login(data) {
     return http.post("/cuslogin", data);
   }
+  addproduct(data) {
+    return http.get("/addproduct", data);
+  }
   // orders(uid) {
   //   return http.get(`/orders/${uid}`);
   // }
