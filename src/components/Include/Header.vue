@@ -29,7 +29,7 @@
                     <div class="navbar-nav mr-auto">
                         <a href="/" class="nav-item nav-link active">Home</a>
                         <a href="/AllProducts" class="nav-item nav-link">Products</a>
-                        <a href="product-detail.html" class="nav-item nav-link">Product Detail</a>
+                        <a href="/ProductDetails" class="nav-item nav-link">Product Detail</a>
                         <a href="cart.html" class="nav-item nav-link">Cart</a>
                         <a href="checkout.html" class="nav-item nav-link">Checkout</a>
                         <a href="my-account.html" class="nav-item nav-link">My Account</a>
@@ -41,19 +41,29 @@
                                 <a href="contact.html" class="dropdown-item">Contact Us</a>
                             </div>
                         </div>
+                        <a href="/Faq" class="nav-item nav-link">FAQ</a>
                     </div>
                     <div class="navbar-nav ml-auto">
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
-                            <div class="dropdown-menu">
-                                <a v-if="!uid" href="/login" class="dropdown-item">Login</a>
-                                <a v-if="!uid" href="/register" class="dropdown-item">Register</a>
-                                <button v-if="uid" class="dropdown-item" @click="logout">Logout</button>
-                                <router-link v-if="uid" :to="'/home/'" class="dropdown-item">{{ userName.full_name }}</router-link>
-                                <!-- <a v-if="!uid" href="/login" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block"> 
-                                    <i class="fa fa-arrow-right ms-3"></i> Join Now
-                                </a> -->
-                            </div>
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> 
+                            <!-- Display the user's full name if logged in, otherwise show 'User Account' -->
+                            {{ uid ? userName.full_name : 'User Account' }}
+                        </a>
+                        <div class="dropdown-menu">
+                            <!-- Show Login/Signup if user is not logged in -->
+                            <a v-if="!uid" href="/login" class="dropdown-item">Login</a>
+                            <a v-if="!uid" href="/register" class="dropdown-item">Register</a>
+
+                            <!-- Show Logout and user-specific links if user is logged in -->
+                            <button v-if="uid" class="dropdown-item" @click="logout">Logout</button>
+                            <a v-if="uid" href="/MyProfile" class="dropdown-item">My Profile</a>
+                            <a v-if="uid" href="/MyOrder" class="dropdown-item">My Order</a>
+                            
+                            <!-- Display the full name of the user in the dropdown -->
+                            <!-- <router-link v-if="uid" :to="'/home/'" class="dropdown-item">
+                            {{ userName.full_name }}
+                            </router-link> -->
+                        </div>
                         </div>
                     </div>
                 </div>

@@ -18,6 +18,24 @@ const routes =  [
     alias: "/login",
     name: "login",
     component: () => import("./components/Login")
+  },
+  {
+    path: "/ProductDetails",
+    alias: "/ProductDetails",
+    name: "ProductDetails",
+    component: () => import("./components/ProductDetails")
+  },
+  {
+    path: "/Faq",
+    alias: "/Faq",
+    name: "Faq",
+    component: () => import("./components/Faq")
+  },
+  {
+    path: "/MyProfile",
+    alias: "/MyProfile",
+    name: "MyProfile",
+    component: () => import("./components/MyProfile")
   }
 ];
 

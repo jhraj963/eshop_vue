@@ -7,6 +7,13 @@ class DataService {
   addproduct(data) {
     return http.get("/addproduct", data);
   }
+  faq(data) {
+    return http.get("/faq", data);
+  }
+  customers(id) {
+    return http.get(`/customers/${id}`);
+  }
+
   // orders(uid) {
   //   return http.get(`/orders/${uid}`);
   // }
