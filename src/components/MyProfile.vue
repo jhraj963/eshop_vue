@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     editProfile() {
-      this.$router.push('/edit-profile');
+      this.$router.push('/EditProfile');
     },
   },
 };
@@ -105,7 +105,7 @@ export default {
 }
 
 .btn {
-  background-color: #007bff;
+  background-color: #05b347;
   color: white;
   padding: 10px 20px;
   font-size: 1rem;
