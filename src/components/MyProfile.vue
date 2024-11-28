@@ -1,77 +1,125 @@
 <template>
   <div class="my-profile">
-    <!-- Display loading message while data is being fetched -->
-    <div v-if="loading">Loading your profile...</div>
+    <!-- Profile Header -->
+    <div class="container">
+      <h1 class="page-title">My Profile</h1>
 
-    <!-- Display error message if there's an issue fetching data -->
-    <div v-if="error" class="error-message">
-      <p>There was an error loading your profile. Please try again later.</p>
-    </div>
-
-    <!-- Display the customer's profile information if successfully fetched -->
-    <div v-if="!loading && !error && myprofile">
-      <h2>My Profile</h2>
-      <div>
-        <p><strong>Full Name:</strong> {{ myprofile.full_name || 'N/A' }}</p>
-        <p><strong>Email:</strong> {{ myprofile.email || 'N/A' }}</p>
-        <p><strong>Phone:</strong> {{ myprofile.phone || 'N/A' }}</p>
-        <p><strong>Address:</strong> {{ myprofile.address || 'N/A' }}</p>
+      <div v-if="userName" class="profile-container">
+        <!-- Profile Info -->
+        <div class="profile-card">
+          <div class="profile-header">
+            <!-- Profile Picture -->
+            <div class="profile-pic">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOH2aZnIHWjMQj2lQUOWIL2f4Hljgab0ecZQ&s" alt="Profile Picture" class="profile-img" />
+            </div>
+            <div class="profile-details">
+              <h2>{{ userName.full_name }}</h2>
+              <p class="profile-email">{{ userName.email }}</p>
+              <p class="profile-phone">{{ userName.phone }}</p>
+            </div>
+          </div>
+          <button @click="editProfile" class="btn btn-primary">Edit Profile</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Display a fallback message if no profile data is available -->
-    <div v-if="!loading && !error && !myprofile">
-      <p>No profile data available.</p>
+      <!-- If not logged in, show a message -->
+      <div v-else>
+        <p>Please log in to view and edit your profile.</p>
+        <router-link to="/login" class="btn btn-primary">Login</router-link>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import DataService from "../services/DataService"; // Ensure this points to your DataService file
-
 export default {
-  name: "MyProfile",
+  name: 'MyProfile',
   data() {
     return {
-      myprofile: null, // To store the fetched profile data
-      loading: true,   // To manage loading state
-      error: false,    // To manage error state
+      userName: JSON.parse(sessionStorage.getItem('userName')) || null,
     };
   },
   methods: {
-    async fetchProfile() {
-      try {
-        // Retrieve the user ID from sessionStorage
-        const uid = sessionStorage.getItem("uid");
-        if (!uid) {
-          throw new Error("No user ID found in sessionStorage.");
-        }
-
-        console.log("Fetching profile for UID:", uid); // Debug: Log the UID
-
-        // Call the API to fetch customer profile data
-        const response = await DataService.customers(uid);
-
-        console.log("API Response:", response); // Debug: Log the API response
-
-        // Handle the API response
-        if (response.data && response.data.data) {
-          this.myprofile = response.data.data; // Assign data to myprofile
-        } else {
-          throw new Error("No profile data found in the response.");
-        }
-      } catch (error) {
-        this.error = true; // Set error state
-        console.error("Error fetching profile:", error.message); // Debug: Log the error
-      } finally {
-        this.loading = false; // Stop the loading indicator
-      }
+    editProfile() {
+      this.$router.push('/edit-profile');
     },
-  },
-  mounted() {
-    // Fetch profile data when the component is mounted
-    this.fetchProfile();
   },
 };
 </script>
 
+<style scoped>
+.my-profile {
+  padding: 20px;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-details h2 {
+  font-size: 1.8rem;
+  margin: 10px 0;
+}
+
+.profile-email, .profile-phone {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 5px 0;
+}
+
+.btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.btn-primary {
+  margin-top: 20px;
+}
+
+</style>
