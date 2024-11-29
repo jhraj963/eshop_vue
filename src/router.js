@@ -1,48 +1,59 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-const routes =  [
+const routes = [
   {
     path: "/",
     alias: "/home",
     name: "home",
-    component: () => import("./components/Home")
+    component: () => import("./components/Home"),
   },
   {
     path: "/AllProducts",
     alias: "/AllProducts",
     name: "AllProducts",
-    component: () => import("./components/AllProducts")
+    component: () => import("./components/AllProducts"),
   },
   {
     path: "/login",
     alias: "/login",
     name: "login",
-    component: () => import("./components/Login")
+    component: () => import("./components/Login"),
   },
   {
     path: "/ProductDetails",
     alias: "/ProductDetails",
     name: "ProductDetails",
-    component: () => import("./components/ProductDetails")
+    component: () => import("./components/ProductDetails"),
   },
   {
     path: "/Faq",
     alias: "/Faq",
     name: "Faq",
-    component: () => import("./components/Faq")
+    component: () => import("./components/Faq"),
+  },
+  {
+    path: "/BlogPage",
+    alias: "/BlogPage",
+    name: "BlogPage",
+    component: () => import("./components/BlogPage"),
+  },
+  {
+    path: "/blog/:id", 
+    name: "BlogDetails",
+    component: () => import("./components/BlogDetails"), 
   },
   {
     path: "/MyProfile",
     alias: "/MyProfile",
     name: "MyProfile",
-    component: () => import("./components/MyProfile")
+    component: () => import("./components/MyProfile"),
   },
   {
     path: "/EditProfile",
     alias: "/EditProfile",
     name: "EditProfile",
-    component: () => import("./components/EditProfile")
-  }
+    component: () => import("./components/EditProfile"),
+  },
 ];
 
 const router = createRouter({

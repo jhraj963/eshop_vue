@@ -10,10 +10,17 @@ class DataService {
   faq(data) {
     return http.get("/faq", data);
   }
+  blog(data) {
+    return http.get("/blog", data);
+  }
+
+  getBlogById(id) {
+    return http.get(`/blog/${id}`);
+  }
+
   customers(id) {
     return http.get(`/customers/${id}`);
   }
-
 
   findByTitle(title) {
     return http.get(`/tutorials?title=${title}`);

@@ -40,10 +40,11 @@
               </div>
             </div>
             <a href="/Faq" class="nav-item nav-link">FAQ</a>
+            <a href="/BlogPage" class="nav-item nav-link">Blog</a>
           </div>
           <div class="navbar-nav ml-auto">
             <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> 
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                 <!-- Display the user's full name if logged in, otherwise show 'User Account' -->
                 {{ uid ? userName.full_name : 'User Account' }}
               </a>
@@ -105,13 +106,13 @@ export default {
   name: 'Header',
   data() {
     return {
-      uid: sessionStorage.getItem('uid'), 
+      uid: sessionStorage.getItem('uid'),
       userName: JSON.parse(sessionStorage.getItem('userName'))
     };
   },
   watch: {
     // Watch for changes in sessionStorage and update uid and userName
-    'uid': function(newVal) {
+    'uid': function (newVal) {
       if (newVal) {
         this.userName = JSON.parse(sessionStorage.getItem('userName'));
       } else {
