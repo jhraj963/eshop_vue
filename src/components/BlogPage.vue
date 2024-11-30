@@ -11,11 +11,13 @@
         <!-- Blog List -->
         <div v-if="blogList.length > 0" class="blog-grid">
             <div v-for="(blog, index) in blogList" :key="index" class="blog-item">
-                <img v-if="blog.photo" :src="blog.photo.split(',')[0]" alt="Blog" class="blog-image" />
+                <div class="blog-image-container">
+                    <img :src='"http://127.0.0.1:8000" + blog.photo' alt="package-place" class="blog-image" />
+                </div>
                 <div class="blog-content">
                     <h2>{{ blog.title }}</h2>
                     <p class="blog-author">By {{ blog.author }} | {{ formatDate(blog.date) }}</p>
-                    <p class="blog-overview">{{ blog.overview }}</p>
+                    <p class="blog-overview">{{ truncateText(blog.overview, 2) }}</p>
                     <button @click="readMore(blog.id)" class="btn-read-more">Read More</button>
                 </div>
             </div>
@@ -65,6 +67,24 @@ export default {
         readMore(blogId) {
             this.$router.push(`/blog/${blogId}`); // Navigate to blog detail page
         },
+        // Truncate the blog overview to 2 or 3 lines
+        truncateText(text, lines = 3) {
+            const lineHeight = 1.5; // Adjust the line height (can be modified based on font size)
+            const maxHeight = lines * lineHeight * 1.2; // Add extra space to make sure text fits within the lines
+            const div = document.createElement("div");
+            div.style.visibility = "hidden";
+            div.style.position = "absolute";
+            div.style.height = `${maxHeight}em`;
+            div.style.lineHeight = `${lineHeight}em`;
+            div.innerHTML = text;
+            document.body.appendChild(div);
+
+            // Truncate the text if it overflows
+            if (div.scrollHeight > maxHeight) {
+                return text.slice(0, 100) + "..."; // Add "..." at the end if it overflows
+            }
+            return text; // Return the full text if no truncation is needed
+        },
     },
     mounted() {
         this.fetchBlogs(); // Fetch blogs on component mount
@@ -91,12 +111,27 @@ export default {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.blog-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.blog-image-container {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .blog-image {
-    width: 100%;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
+    border-radius: 10px;
 }
 
 .blog-content {
@@ -104,7 +139,7 @@ export default {
 }
 
 .blog-content h2 {
-    font-size: 22px;
+    font-size: 24px;
     margin: 10px 0;
 }
 
@@ -118,6 +153,11 @@ export default {
     font-size: 16px;
     margin-bottom: 15px;
     color: #333;
+    height: 4.5em;
+    /* Limit to 3 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
 }
 
 .btn-read-more {
@@ -127,6 +167,7 @@ export default {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .btn-read-more:hover {
@@ -139,5 +180,15 @@ export default {
     font-size: 18px;
     color: #555;
     margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .blog-content h2 {
+        font-size: 20px;
+    }
+
+    .btn-read-more {
+        font-size: 16px;
+    }
 }
 </style>

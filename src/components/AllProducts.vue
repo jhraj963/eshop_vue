@@ -6,28 +6,22 @@
         <div class="col-lg-12">
           <div class="row">
             <!--Product Listing -->
-            <div
-              class="col-md-3" 
-              v-for="product in addproduct" 
-              :key="product.id">
+            <div class="col-md-3" v-for="product in addproduct" :key="product.id">
               <div class="product-item">
                 <div class="product-title">
-                  <a :href="'product-detail.html?id=' + product.id">
+                  <!-- Updated link to use Vue Router navigation -->
+                  <router-link :to="{ name: 'ProductDetails', params: { id: product.id } }">
                     {{ product.productname }}
-                  </a>
+                  </router-link>
                   <div class="ratting">
-                    <i 
-                      class="fa fa-star" 
-                      v-for="i in 5" 
-                      :key="i" 
-                      :class="{ 'active': i <= product.rating }">
+                    <i class="fa fa-star" v-for="i in 5" :key="i" :class="{ 'active': i <= product.rating }">
                     </i>
                   </div>
                 </div>
                 <div class="product-image">
-                  <a :href="'product-detail.html?id=' + product.id">
-                    <img :src="product.photo" alt="Product Image">
-                  </a>
+                  <router-link :to="{ name: 'ProductDetails', params: { id: product.id } }">
+                    <img :src='"http://127.0.0.1:8000/addproduct/" + product.photo' alt="package-place" />
+                  </router-link>
                   <div class="product-action">
                     <!-- Add to Cart button, triggers addToCart method -->
                     <a href="#" @click.prevent="addToCart(product)"><i class="fa fa-cart-plus"></i></a>

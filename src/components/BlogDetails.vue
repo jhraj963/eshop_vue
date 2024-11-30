@@ -1,14 +1,23 @@
 <template>
     <div class="blog-details">
+        <!-- Loading and Error States -->
         <div v-if="loading" class="loading">Loading Blog...</div>
         <div v-else-if="error" class="error">Failed to fetch blog details. Please try again later.</div>
-        <div v-else>
-            <h1>{{ blog.title }}</h1>
-            <p><strong>Author:</strong> {{ blog.author }}</p>
-            <p><strong>Date:</strong> {{ formatDate(blog.date) }}</p>
-            <p><strong>Overview:</strong> {{ blog.overview }}</p> <!-- Added Overview here -->
-            <img :src="getPhotoUrl(blog.photo)" alt="Blog Image" v-if="blog.photo" />
-            <div v-html="blog.content"></div>
+
+        <!-- Blog Content -->
+        <div v-else class="content-container">
+            <div class="text-content">
+                <h1>{{ blog.title }}</h1>
+                <p><strong>Author:</strong> {{ blog.author }}</p>
+                <p><strong>Date:</strong> {{ formatDate(blog.date) }}</p>
+                <p><strong>Overview:</strong> {{ blog.overview }}</p> <!-- Overview section -->
+                <div v-html="blog.content"></div>
+            </div>
+
+            <!-- Blog Image -->
+            <div class="image-content">
+                <img :src='"http://127.0.0.1:8000" + blog.photo' alt="Blog Image" />
+            </div>
         </div>
     </div>
 </template>
@@ -38,9 +47,6 @@ export default {
                 this.loading = false;
             }
         },
-        getPhotoUrl(photo) {
-            return `${process.env.VUE_APP_BACKEND_URL}${photo}`;
-        },
         formatDate(date) {
             const options = { year: "numeric", month: "long", day: "numeric" };
             return new Date(date).toLocaleDateString(undefined, options);
@@ -54,15 +60,53 @@ export default {
 
 <style scoped>
 .blog-details {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.blog-details img {
-    width: 100%;
+.content-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.text-content {
+    flex: 1;
+    padding-right: 20px;
+    line-height: 1.6;
+}
+
+.text-content h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.text-content p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.text-content strong {
+    font-weight: bold;
+}
+
+.image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
     margin-top: 20px;
+}
+
+.image-content img {
+    max-width: 100%;
+    height: auto;
     border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .loading {
@@ -77,5 +121,21 @@ export default {
     font-size: 18px;
     text-align: center;
     margin-top: 50px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+    }
+
+    .text-content {
+        padding-right: 0;
+    }
+
+    .image-content {
+        padding-left: 0;
+        margin-top: 20px;
+    }
 }
 </style>

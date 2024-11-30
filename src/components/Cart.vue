@@ -9,24 +9,30 @@
             <a href="/AllProducts" class="btn btn-primary">Shop Now</a>
           </div>
           <div v-else>
-            <div v-for="item in cart" :key="item.id" class="cart-item">
-              <div class="cart-item-image">
-                <img :src="item.photo" alt="Product Image">
-              </div>
-              <div class="cart-item-details">
-                <h4>{{ item.productname }}</h4>
-                <p>৳{{ item.price }}</p>
-                <div class="quantity">
-                  <button @click="decreaseQuantity(item)" class="btn">-</button>
-                  <span>{{ item.quantity }}</span>
-                  <button @click="increaseQuantity(item)" class="btn">+</button>
-                </div>
-                <button @click="removeItem(item)" class="btn btn-danger">Remove</button>
-              </div>
-            </div>
+            <!-- Cart Summary in Top Left (Inside the component) -->
             <div class="cart-summary">
               <h3>Total: ৳{{ totalAmount }}</h3>
               <a href="/Checkout" class="btn btn-success">Proceed to Checkout</a>
+            </div>
+            <!-- Display Cart Items -->
+            <div class="cart-items">
+              <div v-for="item in cart" :key="item.id" class="cart-item">
+                <div class="cart-item-image">
+                  <img :src="`http://127.0.0.1:8000/addproduct/${item.photo}`" alt="Product Image" />
+                </div>
+                <div class="cart-item-details">
+                  <h4>{{ item.productname }}</h4>
+                  <p class="price">৳{{ item.price }}</p>
+                  <div class="quantity">
+                    <button @click="decreaseQuantity(item)" class="btn btn-quantity">-</button>
+                    <span>{{ item.quantity }}</span>
+                    <button @click="increaseQuantity(item)" class="btn btn-quantity">+</button>
+                  </div>
+                  <button @click="removeItem(item)" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Remove
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -89,44 +95,100 @@ export default {
   padding: 50px;
 }
 
+.cart-summary {
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.cart-summary h3 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.cart-summary .btn {
+  padding: 10px 20px;
+  font-size: 18px;
+}
+
+.cart-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 items per row */
+  gap: 20px;
+}
+
 .cart-item {
   display: flex;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 20px;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.cart-item:hover {
+  transform: scale(1.05);
 }
 
 .cart-item-image img {
-  width: 150px;
-  height: 150px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  margin-right: 20px;
+  margin-bottom: 10px;
 }
 
 .cart-item-details {
-  flex: 1;
+  text-align: center;
 }
 
 .cart-item-details h4 {
-  margin: 0;
+  font-size: 14px;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.cart-item-details .price {
+  font-size: 12px;
+  color: #333;
 }
 
 .cart-item-details .quantity {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .cart-item-details .btn {
   cursor: pointer;
+  font-size: 14px;
 }
 
-.cart-summary {
-  text-align: right;
-  margin-top: 30px;
+.cart-item-details .btn-quantity {
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  padding: 0;
 }
 
-.cart-summary h3 {
-  margin-bottom: 20px;
+@media (max-width: 768px) {
+  .cart-items {
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 items per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-items {
+    grid-template-columns: 1fr;
+    /* 1 item per row on very small screens */
+  }
 }
 </style>

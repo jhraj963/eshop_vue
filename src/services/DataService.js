@@ -9,6 +9,11 @@ class DataService {
     return http.get("/addproduct", data);
   }
 
+  getProductById(id) {
+    return http.get(`/addproduct/${id}`);
+  }
+
+
   faq(data) {
     return http.get("/faq", data);
   }

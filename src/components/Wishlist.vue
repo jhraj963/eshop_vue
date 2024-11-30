@@ -8,16 +8,23 @@
             <p>Your wishlist is empty.</p>
             <a href="/AllProducts" class="btn btn-primary">Shop Now</a>
           </div>
-          <div v-else>
+          <div v-else class="wishlist-items-container">
+            <!-- Display each wishlist item in a grid -->
             <div v-for="(item, index) in wishlist" :key="item.id" class="wishlist-item">
               <div class="wishlist-item-image">
-                <img :src="item.photo" alt="Product Image">
+                <img :src="`http://127.0.0.1:8000/addproduct/${item.photo}`" alt="Product Image" />
               </div>
               <div class="wishlist-item-details">
                 <h4>{{ item.productname }}</h4>
-                <p>৳{{ item.price }}</p>
-                <button @click="removeFromWishlist(index)" class="btn btn-danger">Remove</button>
-                <button @click="moveToCart(item)" class="btn btn-success">Move to Cart</button>
+                <p class="price">৳{{ item.price }}</p>
+                <div class="wishlist-actions">
+                  <button @click="removeFromWishlist(index)" class="btn btn-danger">
+                    <i class="fa fa-trash"></i> Remove
+                  </button>
+                  <button @click="moveToCart(item)" class="btn btn-success">
+                    <i class="fa fa-cart-plus"></i> Move to Cart
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -73,30 +80,76 @@ export default {
   padding: 50px;
 }
 
-.wishlist-item {
+.wishlist-items-container {
   display: flex;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.wishlist-item {
+  width: calc(33.333% - 20px);
+  /* 3 items per row */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .wishlist-item-image img {
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 200px;
   object-fit: cover;
-  margin-right: 20px;
 }
 
 .wishlist-item-details {
-  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .wishlist-item-details h4 {
-  margin: 0;
+  font-size: 18px;
+  margin: 10px 0;
+  font-weight: bold;
 }
 
-.wishlist-item-details .btn {
-  cursor: pointer;
-  margin-right: 10px;
+.wishlist-item-details .price {
+  font-size: 16px;
+  color: #333;
+}
+
+.wishlist-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.wishlist-actions .btn {
+  flex-grow: 1;
+  margin-left: 5px;
+}
+
+.wishlist-actions .btn i {
+  margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+  .wishlist-item {
+    width: calc(50% - 20px);
+    /* 2 items per row on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .wishlist-item {
+    width: 100%;
+    /* 1 item per row on mobile screens */
+  }
 }
 </style>

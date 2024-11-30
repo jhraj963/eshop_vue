@@ -2,7 +2,7 @@
   <div class="checkout-page">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-6">
           <h2>Checkout</h2>
 
           <!-- Display a message if the user is not logged in -->
@@ -16,50 +16,59 @@
               <h3>Shipping Information</h3>
               <div class="form-group">
                 <label for="customer_name">Full Name:</label>
-                <input type="text" id="customer_name" v-model="shippingInfo.customer_name" required class="form-control" placeholder="Your full name">
+                <input type="text" id="customer_name" v-model="shippingInfo.customer_name" required class="form-control"
+                  placeholder="Your full name">
               </div>
               <div class="form-group">
                 <label for="email">Email Address:</label>
-                <input type="email" id="email" v-model="shippingInfo.email" required class="form-control" placeholder="Your email address">
+                <input type="email" id="email" v-model="shippingInfo.email" required class="form-control"
+                  placeholder="Your email address">
               </div>
               <div class="form-group">
                 <label for="phone">Phone Number:</label>
-                <input type="text" id="phone" v-model="shippingInfo.mobile_no" required class="form-control" placeholder="Your phone number">
+                <input type="text" id="phone" v-model="shippingInfo.mobile_no" required class="form-control"
+                  placeholder="Your phone number">
               </div>
               <div class="form-group">
                 <label for="address">Shipping Address:</label>
-                <input type="text" id="address" v-model="shippingInfo.address" required class="form-control" placeholder="Your address">
+                <input type="text" id="address" v-model="shippingInfo.address" required class="form-control"
+                  placeholder="Your address">
               </div>
               <div class="form-group">
                 <label for="country">Country:</label>
-                <input type="text" id="country" v-model="shippingInfo.country" required class="form-control" placeholder="Your country">
+                <input type="text" id="country" v-model="shippingInfo.country" required class="form-control"
+                  placeholder="Your country">
               </div>
               <div class="form-group">
                 <label for="city">City:</label>
-                <input type="text" id="city" v-model="shippingInfo.city" required class="form-control" placeholder="Your city">
+                <input type="text" id="city" v-model="shippingInfo.city" required class="form-control"
+                  placeholder="Your city">
               </div>
 
-              <h3>Order Summary</h3>
-              <div v-if="cart.length === 0">
-                <p>Your cart is empty.</p>
+              <!-- Total and Place Order button -->
+              <div class="cart-summary">
+                <h4>Total: ৳{{ totalAmount }}</h4>
+                <button type="submit" class="btn btn-success">Place Order</button>
               </div>
-              <div v-else>
-                <div v-for="item in cart" :key="item.id" class="cart-item">
-                  <div class="cart-item-image">
-                    <img :src="item.photo" alt="Product Image">
-                  </div>
-                  <div class="cart-item-details">
-                    <h4>{{ item.productname }}</h4>
-                    <p>৳{{ item.price }} x {{ item.quantity }}</p>
-                  </div>
-                </div>
-                <div class="cart-summary">
-                  <h4>Total: ৳{{ totalAmount }}</h4>
-                </div>
-              </div>
-
-              <button type="submit" class="btn btn-success">Place Order</button>
             </form>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <h3>Order Summary</h3>
+          <div v-if="cart.length === 0">
+            <p>Your cart is empty.</p>
+          </div>
+          <div v-else>
+            <div v-for="item in cart" :key="item.id" class="cart-item">
+              <div class="cart-item-image">
+                <img :src="`http://127.0.0.1:8000/addproduct/${item.photo}`" alt="Product Image">
+              </div>
+              <div class="cart-item-details">
+                <h4>{{ item.productname }}</h4>
+                <p>৳{{ item.price }} x {{ item.quantity }}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -142,6 +151,15 @@ export default {
   margin-bottom: 20px;
 }
 
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.col-lg-6 {
+  flex: 1;
+}
+
 .cart-item {
   display: flex;
   margin-bottom: 20px;
@@ -150,8 +168,8 @@ export default {
 }
 
 .cart-item-image img {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   margin-right: 20px;
 }
@@ -169,7 +187,18 @@ export default {
   margin-bottom: 20px;
 }
 
-.btn {
+.cart-summary .btn {
+  padding: 10px 20px;
+  font-size: 18px;
+}
+
+.btn-success {
   margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
 }
 </style>
