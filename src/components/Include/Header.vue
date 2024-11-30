@@ -85,13 +85,16 @@
         </div>
         <div class="col-md-3">
           <div class="user">
-            <a href="wishlist.html" class="btn wishlist">
+            <!-- Wishlist Button with dynamic count -->
+            <a href="/Wishlist" class="btn wishlist">
               <i class="fa fa-heart"></i>
-              <span>(0)</span>
+              <span>{{ wishlistCount }}</span> <!-- Dynamic Wishlist Count -->
             </a>
-            <a href="cart.html" class="btn cart">
+
+            <!-- Cart Button with dynamic count -->
+            <a href="/Cart" class="btn cart">
               <i class="fa fa-shopping-cart"></i>
-              <span>(0)</span>
+              <span>{{ cartCount }}</span> <!-- Dynamic Cart Count -->
             </a>
           </div>
         </div>
@@ -107,17 +110,28 @@ export default {
   data() {
     return {
       uid: sessionStorage.getItem('uid'),
-      userName: JSON.parse(sessionStorage.getItem('userName'))
+      userName: JSON.parse(sessionStorage.getItem('userName')),
+      cart: JSON.parse(localStorage.getItem('cart')) || [], // Load cart from localStorage
+      wishlist: JSON.parse(localStorage.getItem('wishlist')) || [] // Load wishlist from localStorage
     };
   },
+  computed: {
+    // Compute the cart count from the cart array
+    cartCount() {
+      return this.cart.reduce((total, item) => total + item.quantity, 0); // Calculate total items in the cart
+    },
+    // Compute the wishlist count from the wishlist array
+    wishlistCount() {
+      return this.wishlist.length; // Wishlist count is simply the length of the wishlist array
+    }
+  },
   watch: {
-    // Watch for changes in sessionStorage and update uid and userName
-    'uid': function (newVal) {
-      if (newVal) {
-        this.userName = JSON.parse(sessionStorage.getItem('userName'));
-      } else {
-        this.userName = null; // Reset userName when logged out
-      }
+    // Watch for changes in cart and wishlist, and update localStorage accordingly
+    cart(newCart) {
+      localStorage.setItem('cart', JSON.stringify(newCart)); // Save updated cart to localStorage
+    },
+    wishlist(newWishlist) {
+      localStorage.setItem('wishlist', JSON.stringify(newWishlist)); // Save updated wishlist to localStorage
     }
   },
   methods: {
@@ -127,7 +141,56 @@ export default {
       sessionStorage.removeItem('uid'); // Clear sessionStorage
       sessionStorage.removeItem('userName'); // Clear sessionStorage
       this.$router.push('/'); // Redirect to home or login page
+    },
+
+    // Method to add a product to the cart (or update quantity)
+    addToCart(product) {
+      const existingProduct = this.cart.find(item => item.id === product.id);
+      if (!existingProduct) {
+        this.cart.push({ ...product, quantity: 1 }); // Add product with quantity 1
+      } else {
+        existingProduct.quantity += 1; // Increment the quantity if product exists in cart
+      }
+      window.dispatchEvent(new Event("storage")); // Trigger a storage event to notify other components
+    },
+
+    // Method to add a product to the wishlist
+    addToWishlist(product) {
+      const existingProduct = this.wishlist.find(item => item.id === product.id);
+      if (!existingProduct) {
+        this.wishlist.push(product); // Add product to wishlist
+      }
+      window.dispatchEvent(new Event("storage")); // Trigger a storage event to notify other components
     }
+  },
+  mounted() {
+    // On component mount, load the cart and wishlist data from localStorage
+    this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+    this.wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+    // Listen for any storage event (like adding/removing from cart or wishlist)
+    window.addEventListener("storage", () => {
+      this.cart = JSON.parse(localStorage.getItem('cart')) || [];
+      this.wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    });
   }
-}
+};
 </script>
+
+<style scoped>
+/* Style the cart and wishlist buttons with counts */
+.btn.cart, .btn.wishlist {
+  position: relative;
+}
+
+.btn.cart span, .btn.wishlist span {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 14px;
+}
+</style>

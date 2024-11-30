@@ -38,9 +38,9 @@ const routes = [
     component: () => import("./components/BlogPage"),
   },
   {
-    path: "/blog/:id", 
+    path: "/blog/:id",
     name: "BlogDetails",
-    component: () => import("./components/BlogDetails"), 
+    component: () => import("./components/BlogDetails"),
   },
   {
     path: "/MyProfile",
@@ -53,6 +53,34 @@ const routes = [
     alias: "/EditProfile",
     name: "EditProfile",
     component: () => import("./components/EditProfile"),
+  },
+  {
+    path: "/Cart",
+    alias: "/Cart",
+    name: "Cart",
+    component: () => import("./components/Cart"),
+  },
+  {
+    path: "/Wishlist",
+    alias: "/Wishlist",
+    name: "Wishlist",
+    component: () => import("./components/Wishlist"),
+  },
+  {
+    path: "/Checkout",
+    alias: "/Checkout",
+    name: "Checkout",
+    component: () => import("./components/Checkout"),
+  },
+  {
+    path: "/thank-you",
+    name: "ThankYou",
+    component: () => import("./components/ThankYou"),
+  },
+  {
+    path: "/invoice",
+    name: "Invoice",
+    component: () => import("./components/Invoice"),
   },
 ];
 
