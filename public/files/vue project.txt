@@ -8,7 +8,7 @@
 8. Product Return
 9. Combo Deals or Bundle Offers
 10.Trending Now / Most Popular
-11.Donations at Checkout
+11.Donations at Checkout (Done)
 	Feature: Add an option for customers to donate a small amount to a cause during checkout.
 	Benefit: Encourages positive brand perception and social responsibility.
 12.Waitlist for Upcoming Products
