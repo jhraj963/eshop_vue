@@ -6,8 +6,21 @@
 6. Blog (Done)
 7. FAQ (Done)
 8. Product Return
-
-
+9. Combo Deals or Bundle Offers
+10.Trending Now / Most Popular
+11.Donations at Checkout
+	Feature: Add an option for customers to donate a small amount to a cause during checkout.
+	Benefit: Encourages positive brand perception and social responsibility.
+12.Waitlist for Upcoming Products
+	Feature: Allow users to join a waitlist for soon-to-be-released products and notify them when available.
+	Benefit: Builds anticipation and captures early interest.
+13.Flash Sale Countdown
+	Feature: Add countdown timers to limited-time deals or flash sales.
+	Benefit: Encourages urgency and drives quicker conversions.
+14.Bundle Offers
+	Feature: Allow users to save by purchasing bundled products (e.g., "Buy 1 Get 1 Free" or "Save 20% on Sets").
+	Benefit: Boosts sales by increasing the average order value.
+15. Price Sorting (Done)
 
 
 npm install jspdf

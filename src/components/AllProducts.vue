@@ -4,18 +4,30 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12">
+          <!-- Sort by Price Button Group -->
+          <div class="sort-options">
+            <span>Sort by Price:</span>
+            <div class="btn-group">
+              <button class="btn" :class="{ active: selectedFilter === 'lowToHigh' }"
+                @click="setSortOrder('lowToHigh')">
+                Low to High
+              </button>
+              <button class="btn" :class="{ active: selectedFilter === 'highToLow' }"
+                @click="setSortOrder('highToLow')">
+                High to Low
+              </button>
+            </div>
+          </div>
           <div class="row">
-            <!--Product Listing -->
-            <div class="col-md-3" v-for="product in addproduct" :key="product.id">
+            <!-- Product Listing -->
+            <div class="col-md-3" v-for="product in filteredProducts" :key="product.id">
               <div class="product-item">
                 <div class="product-title">
-                  <!-- Updated link to use Vue Router navigation -->
                   <router-link :to="{ name: 'ProductDetails', params: { id: product.id } }">
                     {{ product.productname }}
                   </router-link>
                   <div class="ratting">
-                    <i class="fa fa-star" v-for="i in 5" :key="i" :class="{ 'active': i <= product.rating }">
-                    </i>
+                    <i class="fa fa-star" v-for="i in 5" :key="i" :class="{ 'active': i <= product.rating }"></i>
                   </div>
                 </div>
                 <div class="product-image">
@@ -23,9 +35,7 @@
                     <img :src='"http://127.0.0.1:8000/addproduct/" + product.photo' alt="package-place" />
                   </router-link>
                   <div class="product-action">
-                    <!-- Add to Cart button, triggers addToCart method -->
                     <a href="#" @click.prevent="addToCart(product)"><i class="fa fa-cart-plus"></i></a>
-                    <!-- Add to Wishlist button, triggers addToWishlist method -->
                     <a href="#" @click.prevent="addToWishlist(product)"><i class="fa fa-heart"></i></a>
                     <a href="#"><i class="fa fa-search"></i></a>
                   </div>
@@ -51,84 +61,150 @@
 import DataService from "../services/DataService";
 
 export default {
-  name: 'AllProducts',
+  name: "AllProducts",
   data() {
     return {
-      addproduct: [], // To store products dynamically fetched from the backend
-      cart: JSON.parse(localStorage.getItem('cart')) || [], // Store cart items in reactive data
-      wishlist: JSON.parse(localStorage.getItem('wishlist')) || [] // Store wishlist items
+      addproduct: [], // Store products fetched from the backend
+      cart: JSON.parse(localStorage.getItem("cart")) || [], // Cart items
+      wishlist: JSON.parse(localStorage.getItem("wishlist")) || [], // Wishlist items
+      selectedFilter: "default", // Selected filter for sorting
     };
   },
   computed: {
-    // Calculate the total cart count
-    cartCount() {
-      return this.cart.reduce((total, item) => total + item.quantity, 0);
+    // Dynamically filter and sort products based on the selected option
+    filteredProducts() {
+      if (this.selectedFilter === "lowToHigh") {
+        return [...this.addproduct].sort((a, b) => a.price - b.price);
+      } else if (this.selectedFilter === "highToLow") {
+        return [...this.addproduct].sort((a, b) => b.price - a.price);
+      }
+      return this.addproduct; // Default sorting
     },
-    // Calculate the total wishlist count
-    wishlistCount() {
-      return this.wishlist.length;
-    }
   },
   methods: {
-    // Method to fetch products from the backend
+    // Fetch all products from the backend
     allproducts() {
-      let uid = sessionStorage.getItem('uid');
+      const uid = sessionStorage.getItem("uid");
       DataService.addproduct(uid)
-        .then(response => {
+        .then((response) => {
           if (response.data.data) {
-            this.addproduct = response.data.data; // Set product data to be displayed
+            this.addproduct = response.data.data; // Set product data
           } else {
             alert(response.data.error);
           }
         })
-        .catch(e => {
-          console.log(e);
+        .catch((e) => {
+          console.error(e);
         });
     },
-
-    // Method to add product to cart
+    // Add a product to the cart
     addToCart(product) {
-      const existingProductIndex = this.cart.findIndex(item => item.id === product.id);
+      const existingProductIndex = this.cart.findIndex((item) => item.id === product.id);
 
       if (existingProductIndex !== -1) {
-        // If the product is already in the cart, increase the quantity
-        this.cart[existingProductIndex].quantity += 1;
+        this.cart[existingProductIndex].quantity += 1; // Increase quantity if already in cart
       } else {
-        // If the product is not in the cart, add it with quantity 1
-        this.cart.push({ ...product, quantity: 1 });
+        this.cart.push({ ...product, quantity: 1 }); // Add new product with quantity 1
       }
 
-      // Sync the updated cart to localStorage
-      localStorage.setItem('cart', JSON.stringify(this.cart));
-
-      // Emit an event to notify other components that cart has been updated
-      window.dispatchEvent(new Event("storage"));
+      // Sync the updated cart with localStorage
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+      window.dispatchEvent(new Event("storage")); // Notify other components
     },
-
-    // Method to add product to wishlist
+    // Add a product to the wishlist
     addToWishlist(product) {
-      const existingProductIndex = this.wishlist.findIndex(item => item.id === product.id);
+      const existingProductIndex = this.wishlist.findIndex((item) => item.id === product.id);
 
       if (existingProductIndex === -1) {
-        // If the product is not in the wishlist, add it
-        this.wishlist.push(product);
+        this.wishlist.push(product); // Add product to wishlist if not already there
       }
 
-      // Sync the updated wishlist to localStorage
-      localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
-
-      // Emit an event to notify other components that wishlist has been updated
-      window.dispatchEvent(new Event("storage"));
-    }
+      // Sync the updated wishlist with localStorage
+      localStorage.setItem("wishlist", JSON.stringify(this.wishlist));
+      window.dispatchEvent(new Event("storage")); // Notify other components
+    },
+    // Set sorting order
+    setSortOrder(order) {
+      this.selectedFilter = order;
+    },
   },
   mounted() {
-    this.allproducts(); // Fetch products when the component is mounted
-
-    // Listen for localStorage changes (such as cart or wishlist updates)
+    this.allproducts(); // Fetch products when component is mounted
     window.addEventListener("storage", () => {
-      this.cart = JSON.parse(localStorage.getItem('cart')) || [];
-      this.wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+      this.cart = JSON.parse(localStorage.getItem("cart")) || [];
+      this.wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     });
-  }
+  },
 };
 </script>
+
+<style scoped>
+.product-view {
+  padding: 20px;
+}
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sort-options span {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-group .btn {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-group .btn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-group .btn.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.product-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.product-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-action a {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.product-price h3 {
+  margin: 15px 0;
+  color: #333;
+}
+
+.btn {
+  background-color: #007bff;
+  color: rgb(5, 0, 0);
+  padding: 8px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+}
+</style>

@@ -4,10 +4,10 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-6">
-          <i class="fa fa-envelope"></i> support@email.com
+          <i class="fa fa-envelope"></i> e-shopper@gmail.com
         </div>
         <div class="col-sm-6">
-          <i class="fa fa-phone-alt"></i> +012-345-6789
+          <i class="fa fa-phone-alt"></i> +88 01572 378254
         </div>
       </div>
     </div>

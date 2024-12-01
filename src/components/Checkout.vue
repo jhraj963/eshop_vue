@@ -2,18 +2,16 @@
   <div class="checkout-page">
     <div class="container-fluid">
       <div class="row">
+        <!-- Left Section: Shipping and Donation -->
         <div class="col-lg-6">
           <h2>Checkout</h2>
-
-          <!-- Display a message if the user is not logged in -->
           <div v-if="!uid">
             <p>Please <a href="/login">login</a> to place an order.</p>
           </div>
-
-          <!-- If logged in, show the checkout form -->
           <div v-else>
             <form @submit.prevent="submitCheckout">
               <h3>Shipping Information</h3>
+              <!-- Shipping form fields -->
               <div class="form-group">
                 <label for="customer_name">Full Name:</label>
                 <input type="text" id="customer_name" v-model="shippingInfo.customer_name" required class="form-control"
@@ -45,15 +43,50 @@
                   placeholder="Your city">
               </div>
 
-              <!-- Total and Place Order button -->
+              <!-- Support a Cause -->
+              <h3 class="donation-title">Support a Cause</h3>
+              <div class="donation-section">
+                <p class="donation-description">
+                  Join us in making a difference! Add a small donation to your order to support a cause.
+                </p>
+                <div class="donation-options">
+                  <label class="donation-option">
+                    <input type="radio" v-model="donationAmount" value="0" />
+                    <span>No, thanks</span>
+                  </label>
+                  <label class="donation-option">
+                    <input type="radio" v-model="donationAmount" value="50" />
+                    <span>৳50</span>
+                  </label>
+                  <label class="donation-option">
+                    <input type="radio" v-model="donationAmount" value="100" />
+                    <span>৳100</span>
+                  </label>
+                  <label class="donation-option">
+                    <input type="radio" v-model="donationAmount" value="200" />
+                    <span>৳200</span>
+                  </label>
+                  <label class="donation-option">
+                    <input type="radio" v-model="donationAmount" value="custom" />
+                    <span>Custom</span>
+                  </label>
+                </div>
+                <div v-if="donationAmount === 'custom'" class="custom-donation-input">
+                  <input type="number" v-model.number="customDonation" min="0" class="form-control"
+                    placeholder="Enter custom amount" />
+                </div>
+              </div>
+
+              <!-- Total and Place Order -->
               <div class="cart-summary">
-                <h4>Total: ৳{{ totalAmount }}</h4>
+                <h4>Total: ৳{{ totalWithDonation }}</h4>
                 <button type="submit" class="btn btn-success">Place Order</button>
               </div>
             </form>
           </div>
         </div>
 
+        <!-- Right Section: Order Summary -->
         <div class="col-lg-6">
           <h3>Order Summary</h3>
           <div v-if="cart.length === 0">
@@ -83,8 +116,8 @@ export default {
   name: "Checkout",
   data() {
     return {
-      uid: sessionStorage.getItem("uid"), // Check if the user is logged in
-      cart: JSON.parse(localStorage.getItem("cart")) || [], // Get cart from localStorage
+      uid: sessionStorage.getItem("uid"),
+      cart: JSON.parse(localStorage.getItem("cart")) || [],
       shippingInfo: {
         customer_name: "",
         email: "",
@@ -92,46 +125,46 @@ export default {
         address: "",
         country: "",
         city: "",
-        order_date: new Date().toISOString().slice(0, 10), // Default to today's date
+        order_date: new Date().toISOString().slice(0, 10),
       },
+      donationAmount: "0",
+      customDonation: 0,
     };
   },
   computed: {
-    // Calculate total amount from cart
     totalAmount() {
       return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
     },
+    totalWithDonation() {
+      const donation = this.donationAmount === "custom" ? this.customDonation : Number(this.donationAmount);
+      return this.totalAmount + donation;
+    },
   },
   methods: {
-    // Submit the checkout information and create the order
     submitCheckout() {
-      if (!this.uid) {
-        alert("Please login to place an order.");
-        return;
-      }
+      const donation = this.donationAmount === "custom" ? this.customDonation : Number(this.donationAmount);
 
       const orderData = {
-        user_id: this.uid, // User ID
-        shipping_info: this.shippingInfo, // Shipping information
-        cart_items: this.cart, // Cart items
-        total_amount: this.totalAmount, // Total order amount
+        user_id: this.uid,
+        shipping_info: this.shippingInfo,
+        cart_items: this.cart,
+        total_amount: this.totalAmount,
+        donation_amount: donation,
       };
 
-      // Call the API to create the order
       DataService.placeOrder(orderData)
         .then((response) => {
           if (response.data.success) {
             alert("Order placed successfully!");
-            localStorage.removeItem("cart"); // Clear the cart after successful order
-            // Pass the order data to the ThankYou page and redirect
+            localStorage.removeItem("cart");
             this.$router.push({ name: "ThankYou", params: { orderDetails: response.data.order } });
           } else {
-            alert("There was an error placing your order. Please try again later.");
+            alert("There was an error placing your order. Please try again.");
           }
         })
         .catch((error) => {
           console.log(error);
-          alert("There was an error placing your order. Please try again later.");
+          alert("There was an error placing your order. Please try again.");
         });
     },
   },
@@ -139,16 +172,17 @@ export default {
 </script>
 
 <style scoped>
+/* Adjusted Product Image Size */
+.cart-item-image img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+/* Other Styles */
 .checkout-page {
   padding: 50px;
-}
-
-.checkout-page form {
-  width: 100%;
-}
-
-.checkout-page .form-group {
-  margin-bottom: 20px;
 }
 
 .row {
@@ -162,16 +196,10 @@ export default {
 
 .cart-item {
   display: flex;
-  margin-bottom: 20px;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
   border-bottom: 1px solid #ddd;
-  padding-bottom: 20px;
-}
-
-.cart-item-image img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  margin-right: 20px;
 }
 
 .cart-item-details {
