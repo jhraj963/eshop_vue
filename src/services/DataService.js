@@ -13,7 +13,6 @@ class DataService {
     return http.get(`/addproduct/${id}`);
   }
 
-
   faq(data) {
     return http.get("/faq", data);
   }
@@ -38,10 +37,20 @@ class DataService {
     return http.post("/allorder/create", orderData);
   }
 
-  // Fetch order details by order ID
   getOrderDetails(orderId) {
     return http.get(`/allorder/${orderId}`);
   }
+
+  // New method to fetch bundle offers (combo deals)
+  getBundles(uid) {
+    return http.get(`/bundles/${uid}`); // Assuming a new backend route for fetching bundles
+  }
+
+  // New method to get all orders for a specific customer
+  getOrdersByCustomer(customerId) {
+    return http.get(`/customer/${customerId}/orders`);
+  }
+
 }
 
 export default new DataService();

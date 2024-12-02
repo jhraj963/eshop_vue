@@ -14,8 +14,9 @@
             </div>
             <div class="profile-details">
               <h2>{{ userName.full_name }}</h2>
-              <p class="profile-email">{{ userName.email }}</p>
-              <p class="profile-phone">{{ userName.phone }}</p>
+              <p class="profile-email">E-mail: {{ userName.email }}</p>
+              <p class="profile-phone">Phone: {{ userName.phone }}</p>
+              <p class="profile-address">Address: {{ userName.address }}</p>
             </div>
           </div>
           <button @click="editProfile" class="btn btn-primary">Edit Profile</button>

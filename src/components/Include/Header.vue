@@ -56,7 +56,7 @@
                 <!-- Show Logout and user-specific links if user is logged in -->
                 <button v-if="uid" class="dropdown-item" @click="logout">Logout</button>
                 <a v-if="uid" href="/MyProfile" class="dropdown-item">My Profile</a>
-                <a v-if="uid" href="/MyOrder" class="dropdown-item">My Order</a>
+                <a v-if="uid" href="/my-orders" class="dropdown-item">My Order</a>
               </div>
             </div>
           </div>

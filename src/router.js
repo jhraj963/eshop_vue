@@ -54,6 +54,12 @@ const routes = [
     component: () => import("./components/EditProfile"),
   },
   {
+    path: "/my-orders",  
+    alias: "/MyOrders",  // '/MyOrders' will also lead to this route
+    name: "MyOrders",  // Component to display all orders
+    component: () => import("./components/MyOrders"),
+  },
+  {
     path: "/Cart",
     alias: "/Cart",
     name: "Cart",
@@ -80,6 +86,11 @@ const routes = [
     path: "/invoice",
     name: "Invoice",
     component: () => import("./components/Invoice"),
+  },
+  {
+    path: "/ComboDeals",
+    name: "ComboDeals",
+    component: () => import("./components/ComboDeals"),
   },
 ];
 
