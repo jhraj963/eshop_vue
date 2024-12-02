@@ -10,9 +10,10 @@
           <div class="profile-header">
             <!-- Profile Picture -->
             <div class="profile-pic">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOH2aZnIHWjMQj2lQUOWIL2f4Hljgab0ecZQ&s" alt="Profile Picture" class="profile-img" />
+              <img v-if="uid && userName.photo" :src='"http://127.0.0.1:8000/customers/" + userName.photo' alt="profile"
+                class="profile-img" />
             </div>
-            <div class="profile-details">
+            <div class="">
               <h2>{{ userName.full_name }}</h2>
               <p class="profile-email">E-mail: {{ userName.email }}</p>
               <p class="profile-phone">Phone: {{ userName.phone }}</p>
@@ -37,6 +38,7 @@ export default {
   name: 'MyProfile',
   data() {
     return {
+      uid: sessionStorage.getItem('uid'),
       userName: JSON.parse(sessionStorage.getItem('userName')) || null,
     };
   },
@@ -99,7 +101,8 @@ export default {
   margin: 10px 0;
 }
 
-.profile-email, .profile-phone {
+.profile-email,
+.profile-phone {
   font-size: 1.1rem;
   color: #666;
   margin: 5px 0;
@@ -122,5 +125,4 @@ export default {
 .btn-primary {
   margin-top: 20px;
 }
-
 </style>

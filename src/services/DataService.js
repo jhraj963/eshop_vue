@@ -5,6 +5,10 @@ class DataService {
     return http.post("/cuslogin", data);
   }
 
+  register(data) {
+    return http.post("/cusregister", data);
+  }
+
   addproduct(data) {
     return http.get("/addproduct", data);
   }
