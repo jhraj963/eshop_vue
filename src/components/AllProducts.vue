@@ -138,7 +138,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<!-- <style scoped>
 .product-view {
   padding: 20px;
 }
@@ -206,5 +206,139 @@ export default {
   border-radius: 4px;
   text-decoration: none;
   font-size: 14px;
+}
+</style> -->
+
+
+<style scoped>
+.product-view {
+  padding: 10px; /* Reduced padding for the main container */
+}
+
+.sort-options {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Reduced bottom margin */
+}
+
+.sort-options span {
+  font-weight: bold;
+  font-size: 14px; /* Smaller font size */
+  margin-right: 10px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 5px; /* Reduced gap between buttons */
+}
+
+.btn-group .btn {
+  padding: 6px 10px; /* Smaller padding for buttons */
+  font-size: 12px; /* Smaller font size */
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-group .btn:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-group .btn.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.product-item {
+  border: 1px solid #ddd;
+  padding: 10px; /* Reduced padding inside product item */
+  margin-bottom: 15px; /* Reduced margin between products */
+  text-align: center;
+  font-size: 14px; /* Smaller font size for product details */
+  background-color: #f9f9f9; /* Light background for better visibility */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.product-title {
+  font-size: 14px; /* Reduced font size for title */
+  margin-bottom: 5px; /* Adjust spacing */
+}
+
+.product-image {
+  position: relative;
+  overflow: hidden; /* Ensures image fits within its container */
+  border-radius: 6px; /* Rounded corners for the image */
+}
+
+.product-image img {
+  max-width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Avoid inline-block gaps */
+  transition: transform 0.3s ease; /* Smooth zoom effect */
+}
+
+.product-image:hover img {
+  transform: scale(1.1); /* Zoom-in effect on hover */
+}
+
+.product-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Small gap between icons */
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 5px;
+  border-radius: 0 6px 0 6px; /* Rounded corners for the action container */
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.product-image:hover .product-action {
+  transform: translateX(0); /* Slide in icons on hover */
+}
+
+.product-action a {
+  margin: 0;
+  color: white;
+  font-size: 12px; /* Smaller icon size */
+}
+
+.product-price h3 {
+  margin: 10px 0; /* Reduce spacing around price */
+  font-size: 16px; /* Slightly smaller font size for price */
+  color: #f9f5f5;
+}
+
+.btn {
+  background-color: #007bff;
+  color: rgb(4, 0, 0);
+  padding: 6px 10px; /* Reduced padding for buttons */
+  font-size: 12px; /* Smaller font size */
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.ratting i {
+  font-size: 12px; /* Smaller star icons */
+}
+
+.container-fluid {
+  max-width: 1500px; /* Constrain the overall width */
+  margin: 0 auto;
+}
+
+.col-md-3 {
+  padding: 5px; /* Reduce padding between columns */
 }
 </style>

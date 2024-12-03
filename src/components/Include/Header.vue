@@ -15,7 +15,8 @@
   <!-- Top bar End -->
 
   <!-- Nav Bar Start -->
-  <div class="nav">
+   <div class="sticky-top">
+      <div class="nav sticky-top">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <a href="#" class="navbar-brand">MENU</a>
@@ -64,6 +65,8 @@
       </nav>
     </div>
   </div>
+   </div>
+  
   <!-- Nav Bar End -->
 
   <!-- Bottom Bar Start -->
